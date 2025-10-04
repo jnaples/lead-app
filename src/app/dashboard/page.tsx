@@ -36,15 +36,15 @@ export default function Home() {
                     <Label htmlFor="niche">Niche</Label>
                     <Input id="niche" placeholder="eg., lawfirms" />
                   </div>
-                  <div className="space-y-6 grid grid-cols-3 gap-6 items-start">
-                    <div className="grid gap-2 col-span-2 ">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                    <div className="grid gap-2 col-span-1 md:col-span-2 ">
                       <Label htmlFor="location">City</Label>
                       <Input
                         id="location"
                         placeholder="eg., New York, Dallas"
                       />
                     </div>
-                    <div className="grid col-span-1 w-full gap-2">
+                    <div className="grid col-span-1 md:col-span-1 w-full gap-2">
                       <Label htmlFor="state">State</Label>
                       <StateSelect id="state" />
                     </div>
@@ -56,7 +56,7 @@ export default function Home() {
               <Button
                 onClick={fetchResults}
                 disabled={loading}
-                className="mx-auto"
+                className="mx-auto w-full md:w-fit"
               >
                 {loading ? "Searching..." : "Search Businesses"}
               </Button>

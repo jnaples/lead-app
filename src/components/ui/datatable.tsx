@@ -1,6 +1,7 @@
 import { Upload } from "lucide-react";
 import { Button } from "./button";
 import { useExportToCSV } from "@/hooks/useExportToCSV";
+import toast from "react-hot-toast";
 
 interface SearchResult {
   businessName: string;
@@ -26,6 +27,27 @@ export default function DataTable({ results, loading }: DataTableProps) {
     website: "Website URL",
   };
 
+  const handleExport = () => {
+    if (!results || results.length === 0) {
+      toast.error("No data to export", {
+        style: {
+          background: "#fef2f2",
+          color: "#b91c1c",
+        },
+      });
+      return;
+    }
+
+    toast.success("CSV downloaded!", {
+      style: {
+        background: "#f0fdf4",
+        color: "#15803d",
+      },
+    });
+
+    exportCSV(results, headersMap);
+  };
+
   return (
     <div className="h-full flex flex-col px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
@@ -33,10 +55,7 @@ export default function DataTable({ results, loading }: DataTableProps) {
           <h2 className="text-base font-semibold text-zinc-900">Businesses</h2>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <Button
-            variant="outline"
-            onClick={() => exportCSV(results, headersMap)}
-          >
+          <Button variant="outline" onClick={handleExport}>
             <Upload className="w-5 h-5" />
             Export to CSV
           </Button>
