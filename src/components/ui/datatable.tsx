@@ -1,5 +1,6 @@
 import { Upload } from "lucide-react";
 import { Button } from "./button";
+import { useExportToCSV } from "@/hooks/useExportToCSV";
 
 interface SearchResult {
   businessName: string;
@@ -17,6 +18,14 @@ function classNames(...classes: (string | undefined | false | null)[]) {
 }
 
 export default function DataTable({ results, loading }: DataTableProps) {
+  const exportCSV = useExportToCSV("businesses.csv");
+
+  const headersMap = {
+    businessName: "Business Name",
+    phone: "Phone Number",
+    website: "Website URL",
+  };
+
   return (
     <div className="h-full flex flex-col px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
@@ -24,7 +33,10 @@ export default function DataTable({ results, loading }: DataTableProps) {
           <h2 className="text-base font-semibold text-zinc-900">Businesses</h2>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <Button variant="outline">
+          <Button
+            variant="outline"
+            onClick={() => exportCSV(results, headersMap)}
+          >
             <Upload className="w-5 h-5" />
             Export to CSV
           </Button>
@@ -33,7 +45,7 @@ export default function DataTable({ results, loading }: DataTableProps) {
 
       <div className="mt-4 flex-1 min-h-0">
         <div className="h-full min-w-full overflow-y-auto overflow-x-auto -mx-4 -my-2 sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle">
+          <div className="inline-block min-w-full align-middle">
             <table className="min-w-full border-separate border-spacing-0 border-b border-zinc-200">
               <thead className="bg-white">
                 <tr>

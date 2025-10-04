@@ -12,6 +12,7 @@ import DataTable from "@/components/ui/datatable";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Navbar03 } from "@/components/ui/shadcn-io/navbar-03";
+import { StateSelect } from "@/components/ui/stateSelect";
 import { useSearchResults } from "@/hooks/useSearchResults";
 
 export default function Home() {
@@ -35,9 +36,18 @@ export default function Home() {
                     <Label htmlFor="niche">Niche</Label>
                     <Input id="niche" placeholder="eg., lawfirms" />
                   </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="location">Location</Label>
-                    <Input id="location" placeholder="eg., New York, NY" />
+                  <div className="space-y-6 grid grid-cols-3 gap-6 items-start">
+                    <div className="grid gap-2 col-span-2 ">
+                      <Label htmlFor="location">City</Label>
+                      <Input
+                        id="location"
+                        placeholder="eg., New York, Dallas"
+                      />
+                    </div>
+                    <div className="grid col-span-1 w-full gap-2">
+                      <Label htmlFor="state">State</Label>
+                      <StateSelect id="state" />
+                    </div>
                   </div>
                 </div>
               </form>
