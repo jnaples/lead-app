@@ -35,7 +35,7 @@ export function useSearchResults() {
           }
           return {
             businessName: item.title || "No name",
-            phone: item.phone || "",
+            phone: item.phone || "--",
             website,
           };
         })

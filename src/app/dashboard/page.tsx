@@ -18,11 +18,13 @@ export default function Home() {
   const { results, fetchResults, loading, error } = useSearchResults();
 
   return (
-    <div className="h-[600px]">
-      <Navbar03 className="mb-6" />
-      <main className="w-full pb-10">
-        <div className="container max-w-4xl mx-auto px-6">
-          <Card className="mb-6">
+    <div className="h-[100svh] flex flex-col pb-10 gap-6">
+      <Navbar03 className="shrink-0" />
+
+      <main className="flex-1 min-h-0 flex items-stretch">
+        <div className="max-w-4xl w-full mx-auto px-6 flex flex-col flex-1 min-h-0">
+          {/* top card: auto height */}
+          <Card className="mb-6 shrink-0">
             <CardHeader>
               <CardTitle>Search local businesses</CardTitle>
             </CardHeader>
@@ -30,22 +32,12 @@ export default function Home() {
               <form>
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-2">
-                    <Label htmlFor="niche">Email</Label>
-                    <Input
-                      id="niche"
-                      type="text"
-                      placeholder="eg., lawfirms, dentists, gyms"
-                      required
-                    />
+                    <Label htmlFor="niche">Niche</Label>
+                    <Input id="niche" placeholder="eg., lawfirms" />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="niche">Location</Label>
-                    <Input
-                      id="niche"
-                      type="text"
-                      placeholder="eg., New York, NY or 10001"
-                      required
-                    />
+                    <Label htmlFor="location">Location</Label>
+                    <Input id="location" placeholder="eg., New York, NY" />
                   </div>
                 </div>
               </form>
@@ -61,7 +53,9 @@ export default function Home() {
             </CardFooter>
           </Card>
 
-          <Card>
+          {/* table card: must be flex container so table area can flex and scroll */}
+          <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
+            {/* DataTable will fill this card and make rows scroll */}
             <DataTable results={results} loading={loading} />
           </Card>
         </div>
