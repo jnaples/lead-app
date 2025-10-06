@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "@/app/styles/globals.css";
+import "@/styles/globals.css";
 import { Toaster } from "react-hot-toast";
+import { Navbar03 } from "@/ui/shadcn-io/navbar-03";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,9 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-[100svh] flex flex-col pb-10 gap-6`}
       >
-        {children}
+        <Navbar03 className="shrink-0" />
+        <main className="flex-1 min-h-0 flex items-stretch">{children}</main>
         <Toaster position="top-right" />
       </body>
     </html>

@@ -2,18 +2,14 @@
 
 import * as React from "react";
 import { useEffect, useState, useRef } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@/ui/navigation-menu";
+import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
 import { cn } from "@/lib/utils";
 import Logo from "../../logo";
 import Link from "next/link";
@@ -141,39 +137,6 @@ export const Navbar03 = React.forwardRef<HTMLElement, Navbar03Props>(
         <div className="container mx-auto flex h-16 max-w-screen-2xl items-center justify-between gap-4">
           {/* Left side */}
           <div className="flex items-center gap-2">
-            {/* Mobile menu trigger */}
-            {isMobile && (
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    className="group h-9 w-9 hover:bg-accent hover:text-accent-foreground"
-                    variant="ghost"
-                    size="icon"
-                  >
-                    <HamburgerIcon />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent align="start" className="w-64 p-1">
-                  <NavigationMenu className="max-w-none">
-                    <NavigationMenuList className="flex-col items-start gap-0">
-                      {navigationLinks.map((link, index) => (
-                        <NavigationMenuItem key={index} className="w-full">
-                          <button
-                            onClick={(e) => e.preventDefault()}
-                            className={cn(
-                              "flex w-full items-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer no-underline",
-                              link.active && "bg-accent text-accent-foreground"
-                            )}
-                          >
-                            {link.label}
-                          </button>
-                        </NavigationMenuItem>
-                      ))}
-                    </NavigationMenuList>
-                  </NavigationMenu>
-                </PopoverContent>
-              </Popover>
-            )}
             {/* Main nav */}
             <div className="flex items-center gap-6">
               <Link
@@ -207,8 +170,40 @@ export const Navbar03 = React.forwardRef<HTMLElement, Navbar03Props>(
               )}
             </div>
           </div>
-          {/* Right side */}
-          <div className="flex items-center gap-3">
+          {/* Right side */} {/* Mobile menu trigger */}
+          {isMobile && (
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  className="group h-9 w-9 hover:bg-accent hover:text-accent-foreground"
+                  variant="ghost"
+                  size="icon"
+                >
+                  <HamburgerIcon />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align="start" className="p-1 mr-4">
+                <NavigationMenu className="max-w-none">
+                  <NavigationMenuList className="flex-col items-start gap-0">
+                    {navigationLinks.map((link, index) => (
+                      <NavigationMenuItem key={index} className="w-full">
+                        <button
+                          onClick={(e) => e.preventDefault()}
+                          className={cn(
+                            "flex w-full items-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer no-underline",
+                            link.active && "bg-accent text-accent-foreground"
+                          )}
+                        >
+                          {link.label}
+                        </button>
+                      </NavigationMenuItem>
+                    ))}
+                  </NavigationMenuList>
+                </NavigationMenu>
+              </PopoverContent>
+            </Popover>
+          )}
+          <div className=" items-center gap-3 hidden md:flex">
             <Button
               variant="ghost"
               size="sm"
