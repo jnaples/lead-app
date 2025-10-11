@@ -63,9 +63,9 @@ const states = [
   { value: "wy", label: "Wyoming" },
 ];
 
-export function StateSelect({ id }) {
+export function StateSelect({ id, value, onValueChange }) {
   return (
-    <Select>
+    <Select value={value || ""} onValueChange={onValueChange}>
       <SelectTrigger id={id} className="w-full h-8 ">
         <SelectValue placeholder="Select a state" />
       </SelectTrigger>

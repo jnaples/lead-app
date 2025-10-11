@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Button } from "@/ui/button";
 import {
   Card,
@@ -13,11 +13,14 @@ import FormErrorMessage from "@/ui/form-error-message";
 import { Label } from "@radix-ui/react-label";
 
 export default function SearchBusinessForm({ fetchResults, loading, credits }) {
-  const { register, formState, getValues, handleSubmit, reset } = useForm();
+  const { register, formState, getValues, handleSubmit, reset, control } =
+    useForm();
   const { errors } = formState;
 
   async function onSubmit() {
     await fetchResults();
+    console.log(getValues());
+    reset();
   }
 
   return (
@@ -58,14 +61,20 @@ export default function SearchBusinessForm({ fetchResults, loading, credits }) {
               </div>
               <div className="grid col-span-1 md:col-span-1 w-full gap-2">
                 <Label htmlFor="state">State</Label>
-                <StateSelect
-                  id="state"
-                  {...register("state", {
-                    required: "This field is required",
-                  })}
+                <Controller
+                  name="state"
+                  control={control}
+                  rules={{ required: "This field is required" }}
+                  render={({ field }) => (
+                    <StateSelect
+                      id="state"
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    />
+                  )}
                 />
                 {errors.state && (
-                  <FormErrorMessage errorMessage={errors?.state.message} />
+                  <FormErrorMessage errorMessage={errors.state.message} />
                 )}
               </div>
             </div>

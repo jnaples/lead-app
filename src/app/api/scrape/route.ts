@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 
+const businessType = "lawyers";
 const longitude = 41.2742293513112;
 const latitude = -73.1334577959206;
 
 export async function GET() {
   const apiKey = process.env.API_KEY;
-  const url = `https://serpapi.com/search.json?engine=google_maps&q=lawyers+near+me&ll=@${longitude},${latitude},18z&api_key=${apiKey}&type=search`;
+  const url = `https://serpapi.com/search.json?engine=google_maps&q=${businessType}+near+me&ll=@${longitude},${latitude},18z&api_key=${apiKey}&type=search`;
 
   try {
     const res = await fetch(url);
