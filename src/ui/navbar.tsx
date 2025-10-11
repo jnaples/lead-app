@@ -71,7 +71,8 @@ export interface NavBarProps extends React.HTMLAttributes<HTMLElement> {
 const defaultNavigationLinks: NavBarNavItem[] = [
   { href: "#", label: "Home", active: true },
   { href: "/plans", label: "Plans" },
-  { href: "#", label: "About" },
+  { href: "#", label: "Account" },
+  { href: "#", label: "Sign out" },
 ];
 
 export const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
@@ -81,7 +82,6 @@ export const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
       logo = <Logo />,
       logoHref = "/",
       navigationLinks = defaultNavigationLinks,
-      creditCount,
       signInHref = "#signin",
       ctaText = "Get Started",
       ctaHref = "#get-started",
@@ -205,18 +205,11 @@ export const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
               </PopoverContent>
             </Popover>
           )}
-          <div className=" items-center gap-3 hidden md:flex">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-sm font-medium hover:bg-accent hover:text-accent-foreground"
-              onClick={(e) => {
-                e.preventDefault();
-                if (onSignInClick) onSignInClick();
-              }}
-            >
-              {`${credits} Credits`}
-            </Button>
+          <div className=" items-center gap-1.5 hidden md:flex font-bold">
+            <div className="bg-[var(--primary)] rounded-full h-6 w-6 text-white flex justify-center items-center">
+              {credits}
+            </div>
+            Credits
             {/* <Button
               size="sm"
               className="text-sm font-medium px-4 h-9 rounded-md shadow-sm"

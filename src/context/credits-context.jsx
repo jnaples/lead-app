@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 const CreditContext = createContext();
 
 export function CreditsProvider({ children }) {
-  const [credits, setCredits] = useState(5);
+  const [credits, setCredits] = useState(1);
 
   return (
     <CreditContext.Provider value={{ credits, setCredits }}>
