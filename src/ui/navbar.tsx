@@ -11,8 +11,9 @@ import {
 } from "@/ui/navigation-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
 import { cn } from "@/lib/utils";
-import Logo from "../../logo";
+import Logo from "./logo";
 import Link from "next/link";
+import { useCredits } from "@/context/credits-context";
 
 // Hamburger icon component
 const HamburgerIcon = ({
@@ -48,17 +49,17 @@ const HamburgerIcon = ({
 );
 
 // Types
-export interface Navbar03NavItem {
+export interface NavBarNavItem {
   href?: string;
   label: string;
   active?: boolean;
 }
 
-export interface Navbar03Props extends React.HTMLAttributes<HTMLElement> {
+export interface NavBarProps extends React.HTMLAttributes<HTMLElement> {
   logo?: React.ReactNode;
   logoHref?: string;
-  navigationLinks?: Navbar03NavItem[];
-  signInText?: string;
+  navigationLinks?: NavBarNavItem[];
+  credits?: number;
   signInHref?: string;
   ctaText?: string;
   ctaHref?: string;
@@ -67,20 +68,20 @@ export interface Navbar03Props extends React.HTMLAttributes<HTMLElement> {
 }
 
 // Default navigation links
-const defaultNavigationLinks: Navbar03NavItem[] = [
+const defaultNavigationLinks: NavBarNavItem[] = [
   { href: "#", label: "Home", active: true },
   { href: "/plans", label: "Plans" },
   { href: "#", label: "About" },
 ];
 
-export const Navbar03 = React.forwardRef<HTMLElement, Navbar03Props>(
+export const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
   (
     {
       className,
       logo = <Logo />,
-      logoHref = "#",
+      logoHref = "/",
       navigationLinks = defaultNavigationLinks,
-      signInText = "Account",
+      creditCount,
       signInHref = "#signin",
       ctaText = "Get Started",
       ctaHref = "#get-started",
@@ -91,6 +92,7 @@ export const Navbar03 = React.forwardRef<HTMLElement, Navbar03Props>(
     ref
   ) => {
     const [isMobile, setIsMobile] = useState(false);
+    const { credits } = useCredits();
     const containerRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
@@ -213,7 +215,7 @@ export const Navbar03 = React.forwardRef<HTMLElement, Navbar03Props>(
                 if (onSignInClick) onSignInClick();
               }}
             >
-              {signInText}
+              {`${credits} Credits`}
             </Button>
             {/* <Button
               size="sm"
@@ -232,6 +234,6 @@ export const Navbar03 = React.forwardRef<HTMLElement, Navbar03Props>(
   }
 );
 
-Navbar03.displayName = "Navbar03";
+NavBar.displayName = "NavBar";
 
 export { Logo, HamburgerIcon };

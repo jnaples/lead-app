@@ -9,11 +9,19 @@ type SearchResult = {
 export function useSearchResults() {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchResults = async () => {
-    setLoading(true); // start loading
+    setLoading(true);
+    setError(null);
+
     try {
       const res = await fetch("/api/scrape");
+
+      if (!res.ok) {
+        throw new Error(`Error getting results: ${res.status}`);
+      }
+
       const data = await res.json();
 
       if (!data.local_results) {
@@ -44,11 +52,12 @@ export function useSearchResults() {
       setResults(cleanResults);
     } catch (err) {
       console.error(err);
+      setError(err instanceof Error ? err.message: "Error occured")
       setResults([]);
     } finally {
       setLoading(false); // stop loading
     }
   };
 
-  return { results, loading, fetchResults };
+  return { results, loading, fetchResults, error };
 }

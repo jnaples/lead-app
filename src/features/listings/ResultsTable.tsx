@@ -13,13 +13,18 @@ interface SearchResult {
 interface ResultsTableProps {
   results: SearchResult[];
   loading: boolean;
+  error?: string | null;
 }
 
 function classNames(...classes: (string | undefined | false | null)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ResultsTable({ results, loading }: ResultsTableProps) {
+export default function ResultsTable({
+  results,
+  loading,
+  error,
+}: ResultsTableProps) {
   const exportCSV = useExportToCSV("businesses.csv");
 
   const headersMap = {
@@ -68,8 +73,8 @@ export default function ResultsTable({ results, loading }: ResultsTableProps) {
 
         <div className="mt-4 flex-1 min-h-0">
           <div className="h-full min-w-full overflow-y-auto overflow-x-auto -mx-4 -my-2 sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full align-middle">
-              <table className="min-w-full border-separate border-spacing-0 border-b border-zinc-200">
+            <div className="inline-block min-w-full align-middle h-full">
+              <table className="min-w-full border-separate border-spacing-0 border-b border-zinc-200 h-full">
                 <thead className="bg-white">
                   <tr>
                     <th
@@ -101,6 +106,16 @@ export default function ResultsTable({ results, loading }: ResultsTableProps) {
                         className="px-6 py-4 text-center text-zinc-500"
                       >
                         Loading...
+                      </td>
+                    </tr>
+                  )}
+                  {error && (
+                    <tr>
+                      <td
+                        colSpan={3}
+                        className="px-6 py-4 text-center text-zinc-500"
+                      >
+                        Error: {error}
                       </td>
                     </tr>
                   )}

@@ -23,6 +23,6 @@
       "@/*": ["*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/context/credits-context.jsx", "src/app/dashboard/layout.jsx", "src/app/dashboard/page.jsx", "src/features/search-businesses/SearchBusinessForm.jsx"],
   "exclude": ["node_modules"]
 }

@@ -5,7 +5,7 @@ export default function Logo() {
     <Image
       src="/logo.svg"
       alt="lumi logo"
-      width={100}
+      width={80}
       height={0} // ignored for SVG
       style={{ height: "auto" }}
     />
