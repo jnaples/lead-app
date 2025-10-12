@@ -11,15 +11,35 @@ import { Input } from "@/ui/input";
 import { StateSelect } from "@/ui/stateSelect";
 import FormErrorMessage from "@/ui/form-error-message";
 import { Label } from "@radix-ui/react-label";
+import { useGeocode } from "@/hooks/useGeocode";
+
 
 export default function SearchBusinessForm({ fetchResults, loading, credits }) {
-  const { register, formState, getValues, handleSubmit, reset, control } =
-    useForm();
+  const {
+    register,
+    formState,
+    getValues,
+    handleSubmit,
+    reset,
+    control,
+    watch,
+  } = useForm();
   const { errors } = formState;
+
+  const city = watch("city");
+  const state = watch("state");
+
+  const {
+    coords,
+    loading: geoLoading,
+    error: geoError,
+  } = useGeocode(city, state);
 
   async function onSubmit() {
     await fetchResults();
     console.log(getValues());
+    console.log("Coords:", coords);
+
     reset();
   }
 
@@ -79,6 +99,7 @@ export default function SearchBusinessForm({ fetchResults, loading, credits }) {
               </div>
             </div>
             <Button
+              variant="default"
               type="submit"
               disabled={loading || credits <= 0}
               className="mx-auto w-full md:w-fit"
