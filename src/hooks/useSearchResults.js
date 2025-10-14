@@ -1,15 +1,9 @@
 import { useState } from "react";
 
-type SearchResult = {
-  businessName: string;
-  phone?: string;
-  website: string;
-};
-
 export function useSearchResults() {
-  const [results, setResults] = useState<SearchResult[]>([]);
+  const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
 
   const fetchResults = async () => {
     setLoading(true);
@@ -29,10 +23,10 @@ export function useSearchResults() {
         return;
       }
 
-      console.log(data.local_results);
+      console.log("Results", data.local_results);
 
       const cleanResults = data.local_results
-        .map((item: any) => {
+        .map((item) => {
           // Clean website
           let website = item.website || null;
           if (website) {
@@ -52,7 +46,7 @@ export function useSearchResults() {
       setResults(cleanResults);
     } catch (err) {
       console.error(err);
-      setError(err instanceof Error ? err.message: "Error occured")
+      setError(err instanceof Error ? err.message : "Error occured");
       setResults([]);
     } finally {
       setLoading(false); // stop loading

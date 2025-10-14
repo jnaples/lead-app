@@ -12,9 +12,13 @@ import { StateSelect } from "@/ui/stateSelect";
 import FormErrorMessage from "@/ui/form-error-message";
 import { Label } from "@radix-ui/react-label";
 import { useGeocode } from "@/hooks/useGeocode";
+import toast from "react-hot-toast";
 
-
-export default function SearchBusinessForm({ fetchResults, loading, credits }) {
+export default function SearchBusinessForm({
+  fetchResults,
+  loading: isFetchingResults,
+  credits,
+}) {
   const {
     register,
     formState,
@@ -31,15 +35,30 @@ export default function SearchBusinessForm({ fetchResults, loading, credits }) {
 
   const {
     coords,
-    loading: geoLoading,
-    error: geoError,
+    loading: geocodeLoading,
+    error: geocodeError,
   } = useGeocode(city, state);
 
-  async function onSubmit() {
-    await fetchResults();
-    console.log(getValues());
-    console.log("Coords:", coords);
+  async function onSubmit(data) {
+    if (coords === null) {
+      toast.error("Location not found", {
+        style: {
+          background: "#fef2f2",
+          color: "#b91c1c",
+        },
+      });
+      return;
+    }
 
+    const payload = {
+      businessType: data.businessType,
+      latitude: coords.lat,
+      longitude: coords.lon,
+    };
+
+    console.log("Payload:", payload);
+
+    await fetchResults(payload);
     reset();
   }
 
@@ -55,8 +74,8 @@ export default function SearchBusinessForm({ fetchResults, loading, credits }) {
               <Label htmlFor="businessType">Business Type</Label>
               <Input
                 id="businessType"
-                placeholder="eg., lawfirms"
-                disabled={loading}
+                placeholder="eg., lawfirms, dentists"
+                disabled={isFetchingResults}
                 {...register("businessType", {
                   required: "This field is required",
                 })}
@@ -71,6 +90,7 @@ export default function SearchBusinessForm({ fetchResults, loading, credits }) {
                 <Input
                   id="city"
                   placeholder="eg., New York, Dallas"
+                  disabled={isFetchingResults}
                   {...register("city", {
                     required: "This field is required",
                   })}
@@ -90,6 +110,7 @@ export default function SearchBusinessForm({ fetchResults, loading, credits }) {
                       id="state"
                       value={field.value}
                       onValueChange={field.onChange}
+                      disabled={isFetchingResults}
                     />
                   )}
                 />
@@ -101,10 +122,10 @@ export default function SearchBusinessForm({ fetchResults, loading, credits }) {
             <Button
               variant="default"
               type="submit"
-              disabled={loading || credits <= 0}
+              disabled={isFetchingResults || credits <= 0}
               className="mx-auto w-full md:w-fit"
             >
-              {loading ? "Searching..." : "Search Businesses"}
+              {isFetchingResults ? "Searching..." : "Search Businesses"}
             </Button>
           </div>
         </form>
