@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 
-// const businessType = "lawyers";
-// const latitude = 41.2742293513112;
-// const longitude = -73.1334577959206;
+const businessType = "lawyers";
+const latitude = 41.2742293513112;
+const longitude = -73.1334577959206;
 
 export async function GET() {
   const apiKey = process.env.API_KEY;
