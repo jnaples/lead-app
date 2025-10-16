@@ -89,7 +89,7 @@ export default function SearchBusinessForm({
                 <FormErrorMessage errorMessage={errors?.businessType.message} />
               )}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
               <div className="grid gap-2 col-span-1 md:col-span-2 ">
                 <Label htmlFor="city">City</Label>
                 <Input
