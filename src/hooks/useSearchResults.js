@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { cleanLocalResults } from "./useCleanLocalResults";
 
 export function useSearchResults() {
   const [results, setResults] = useState([]);
@@ -29,26 +30,9 @@ export function useSearchResults() {
         setResults([]);
         return;
       }
-      console.log("data results", data.local_results);
+      // console.log("data results", data.local_results);
 
-      const cleanResults = data.local_results
-        .map((item) => {
-          // Clean website
-          let website = item.website || null;
-          if (website) {
-            const withoutQuery = website.split("?")[0];
-            const parts = withoutQuery.split("/");
-            website =
-              parts.length > 3 ? parts.slice(0, 3).join("/") : withoutQuery;
-          }
-          return {
-            businessName: item.title || "No name",
-            phone: item.phone || "--",
-            website,
-          };
-        })
-        .filter((entry) => entry.website); // skip if no website
-
+      const cleanResults = cleanLocalResults(data.local_results);
       setResults(cleanResults);
     } catch (err) {
       console.error(err);
