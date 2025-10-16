@@ -39,7 +39,7 @@ export default function SearchBusinessForm({
     error: geocodeError,
   } = useGeocode(city, state);
 
-  async function onSubmit(data) {
+  async function onSubmit(formData) {
     if (coords === null) {
       toast.error("Location not found", {
         style: {
@@ -50,15 +50,23 @@ export default function SearchBusinessForm({
       return;
     }
 
-    const payload = {
-      businessType: data.businessType,
+    console.log("Submitting with:", {
+      businessType: formData.businessType,
       latitude: coords.lat,
       longitude: coords.lon,
-    };
+    });
 
-    console.log("Payload:", payload);
+    try {
+      await fetchResults({
+        businessType: formData.businessType,
+        latitude: coords.lat,
+        longitude: coords.lon,
+      });
+    } catch (error) {
+      console.error("Search error:", error);
+      toast.error("Error performing search");
+    }
 
-    await fetchResults(payload);
     reset();
   }
 

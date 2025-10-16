@@ -10,7 +10,7 @@ export default function DashboardPage() {
   const { credits, setCredits } = useCredits();
   const { results, fetchResults, loading, error } = useSearchResults();
 
-  const handleSearch = async () => {
+  const handleSearch = async (searchParams) => {
     if (credits <= 0) {
       toast.error("Out of credits, purchase more", {
         style: {
@@ -21,7 +21,7 @@ export default function DashboardPage() {
 
       return;
     }
-    await fetchResults();
+    await fetchResults(searchParams);
     setCredits((c) => c - 1);
   };
 
