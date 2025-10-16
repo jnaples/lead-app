@@ -5,24 +5,19 @@ export function useSearchResults() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchResults = async ({ businessType, latitude, longitude }) => {
+  const fetchResults = async (payload) => {
     setLoading(true);
     setError(null);
 
     try {
+      const { businessType, latitude, longitude } = payload;
+
       if (!businessType || !latitude || !longitude) {
         throw new Error("Missing required search parameters");
       }
 
-      const searchParams = new URLSearchParams({
-        businessType: String(businessType),
-        latitude: String(latitude),
-        longitude: String(longitude),
-      });
-
-      console.log("Making request with params:", searchParams.toString());
-
-      const res = await fetch(`/api/scrape?${searchParams}`);
+      const query = new URLSearchParams(payload).toString();
+      const res = await fetch(`/api/scrape?${query}`);
 
       if (!res.ok) {
         throw new Error(`Error getting results: ${res.status}`);
@@ -34,8 +29,7 @@ export function useSearchResults() {
         setResults([]);
         return;
       }
-
-      console.log("Results", data.local_results);
+      console.log("data results", data.local_results);
 
       const cleanResults = data.local_results
         .map((item) => {

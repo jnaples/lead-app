@@ -50,23 +50,20 @@ export default function SearchBusinessForm({
       return;
     }
 
-    console.log("Submitting with:", {
+    const payload = {
       businessType: formData.businessType,
       latitude: coords.lat,
       longitude: coords.lon,
-    });
+    };
+
+    console.log(payload);
 
     try {
-      await fetchResults({
-        businessType: formData.businessType,
-        latitude: coords.lat,
-        longitude: coords.lon,
-      });
+      await fetchResults(payload);
     } catch (error) {
       console.error("Search error:", error);
       toast.error("Error performing search");
     }
-
     reset();
   }
 
