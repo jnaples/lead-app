@@ -22,6 +22,8 @@ export function useGeocode(city, state) {
         lon: parseFloat(data[0].lon),
       };
 
+      console.log("new coords", newCoords);
+
       setCoords(newCoords);
       return newCoords;
     } catch (err) {
