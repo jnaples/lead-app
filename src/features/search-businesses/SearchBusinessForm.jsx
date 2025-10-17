@@ -36,11 +36,14 @@ export default function SearchBusinessForm({
   const {
     coords,
     loading: geocodeLoading,
-    error: geocodeError,
+    geocodeNow,
   } = useGeocode(city, state);
 
   async function onSubmit(formData) {
-    if (coords === null) {
+    const { businessType, city, state } = formData;
+    const latestCoords = await geocodeNow(city, state);
+
+    if (!latestCoords) {
       toast.error("Location not found", {
         style: {
           background: "#fef2f2",
@@ -51,9 +54,9 @@ export default function SearchBusinessForm({
     }
 
     const payload = {
-      businessType: formData.businessType,
-      latitude: coords.lat,
-      longitude: coords.lon,
+      businessType: businessType,
+      latitude: latestCoords.lat,
+      longitude: latestCoords.lon,
     };
 
     console.log(payload);
