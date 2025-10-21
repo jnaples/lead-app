@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { cn } from "@/lib/utils";
 import { useEffect, useState, useRef } from "react";
 import { Button } from "@/ui/button";
 import {
@@ -10,10 +11,11 @@ import {
   NavigationMenuList,
 } from "@/ui/navigation-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
-import { cn } from "@/lib/utils";
+import AccountDropdown from "@/ui/account-dropdown-menu";
 import Logo from "./logo";
 import Link from "next/link";
 import { useCredits } from "@/context/credits-context";
+import { usePathname } from "next/navigation";
 
 // Hamburger icon component
 const HamburgerIcon = ({
@@ -71,13 +73,13 @@ export interface NavBarProps extends React.HTMLAttributes<HTMLElement> {
 const defaultNavigationLinks: NavBarNavItem[] = [
   { href: "#", label: "Home", active: true },
   { href: "/plans", label: "Plans" },
-  { href: "#", label: "Account" },
   { href: "#", label: "Sign out" },
 ];
 
 export const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
   (
     {
+      href,
       className,
       logo = <Logo />,
       logoHref = "/",
@@ -127,6 +129,10 @@ export const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
       },
       [ref]
     );
+
+    const pathname = usePathname();
+    const active = pathname === href;
+
     return (
       <header
         ref={combinedRef}
@@ -138,9 +144,9 @@ export const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
       >
         <div className="container mx-auto flex h-16 max-w-screen-2xl items-center justify-between gap-4">
           {/* Left side */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full">
             {/* Main nav */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6 w-full">
               <Link
                 href="/"
                 className="flex items-center space-x-2 text-primary hover:text-primary/90 transition-colors cursor-pointer"
@@ -149,7 +155,7 @@ export const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
               </Link>
               {/* Navigation menu */}
               {!isMobile && (
-                <NavigationMenu className="flex">
+                <NavigationMenu className="flex space-between w-full">
                   <NavigationMenuList className="gap-1">
                     {navigationLinks.map((link, index) => (
                       <NavigationMenuItem key={index}>
@@ -168,6 +174,23 @@ export const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
                       </NavigationMenuItem>
                     ))}
                   </NavigationMenuList>
+                  <div className="flex gap-2 items-center">
+                    <Link
+                      href="/plan"
+                      className={cn(
+                        "relative items-center gap-1.5  md:flex font-bold rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer no-underline before:absolute before:bottom-0 before:left-0 before:right-0 before:h-0.5 before:bg-primary before:scale-x-0 before:transition-transform before:duration-300 hover:before:scale-x-100",
+                        pathname === "/plan" &&
+                          "before:scale-x-100 text-primary"
+                      )}
+                    >
+                      <div className="bg-[var(--primary)] rounded-full h-6 w-6 text-white flex justify-center items-center">
+                        {credits}
+                      </div>
+                      Credit{credits === 1 ? "" : "s"}
+                    </Link>
+                    <div className="w-px h-4 bg-zinc-500"></div>
+                    <AccountDropdown />
+                  </div>
                 </NavigationMenu>
               )}
             </div>
@@ -184,15 +207,15 @@ export const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
                   <HamburgerIcon />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent align="start" className="p-1 mr-4">
+              <PopoverContent align="start" className="p-6 mr-4">
                 <NavigationMenu className="max-w-none">
-                  <NavigationMenuList className="flex-col items-start gap-0">
+                  <NavigationMenuList className="flex-col items-center gap-2">
                     {navigationLinks.map((link, index) => (
                       <NavigationMenuItem key={index} className="w-full">
                         <button
                           onClick={(e) => e.preventDefault()}
                           className={cn(
-                            "flex w-full items-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer no-underline",
+                            "flex w-full items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer no-underline",
                             link.active && "bg-accent text-accent-foreground"
                           )}
                         >
@@ -200,27 +223,37 @@ export const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
                         </button>
                       </NavigationMenuItem>
                     ))}
+
+                    <Link
+                      href="/plan"
+                      className={cn(
+                        "relative items-center gap-1.5  flex md:font-bold rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent font-medium hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer no-underline before:absolute before:bottom-0 before:left-0 before:right-0 before:h-0.5 before:bg-primary before:scale-x-0 before:transition-transform before:duration-300 hover:before:scale-x-100",
+                        pathname === "/plan" &&
+                          "before:scale-x-100 text-primary"
+                      )}
+                    >
+                      <div className="bg-[var(--primary)] rounded-full h-6 w-6 text-white flex justify-center items-center">
+                        {credits}
+                      </div>
+                      Credit{credits === 1 ? "" : "s"}
+                    </Link>
+
+                    {/* <Link
+                      href="/account"
+                      className={cn(
+                        "relative flex w-auto items-center rounded-md px-3 py-2 text-sm font-medium justify-center  transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer no-underline before:absolute before:bottom-0 before:left-0 before:right-0 before:h-0.5 before:bg-primary before:scale-x-0 before:transition-transform before:duration-300 hover:before:scale-x-100",
+                        pathname === "/account" &&
+                          "before:scale-x-100 text-primary"
+                      )}
+                    >
+                      Account
+                    </Link> */}
+                    <AccountDropdown />
                   </NavigationMenuList>
                 </NavigationMenu>
               </PopoverContent>
             </Popover>
           )}
-          <div className=" items-center gap-1.5 hidden md:flex font-bold">
-            <div className="bg-[var(--primary)] rounded-full h-6 w-6 text-white flex justify-center items-center">
-              {credits}
-            </div>
-            Credits
-            {/* <Button
-              size="sm"
-              className="text-sm font-medium px-4 h-9 rounded-md shadow-sm"
-              onClick={(e) => {
-                e.preventDefault();
-                if (onCtaClick) onCtaClick();
-              }}
-            >
-              {ctaText}
-            </Button>*/}
-          </div>
         </div>
       </header>
     );
