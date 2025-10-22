@@ -2,7 +2,7 @@
 
 import { useSearchResults } from "@/hooks/useSearchResults";
 import ResultsTable from "@/features/listings/ResultsTable";
-import SearchBusinessForm from "@/features/search-businesses/SearchBusinessForm";
+import SearchBusinessForm from "@/components/forms/SearchBusinessForm";
 import { useCredits } from "@/context/credits-context";
 import toast from "react-hot-toast";
 

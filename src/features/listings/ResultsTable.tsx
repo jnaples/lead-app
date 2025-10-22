@@ -3,6 +3,7 @@ import { Button } from "../../components/ui/button";
 import { useExportToCSV } from "@/hooks/useExportToCSV";
 import toast from "react-hot-toast";
 import { Card } from "@/components/ui/card";
+import { Spinner } from "@/components/ui/spinner";
 
 interface SearchResult {
   businessName: string;
@@ -105,7 +106,10 @@ export default function ResultsTable({
                         colSpan={3}
                         className="px-6 py-4 text-center text-zinc-500"
                       >
-                        Loading...
+                        <div className="flex items-center justify-center flex-col gap-4">
+                          <Spinner className="size-8" />
+                          <p>Loading...</p>
+                        </div>
                       </td>
                     </tr>
                   )}
