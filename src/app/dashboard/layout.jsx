@@ -1,7 +1,7 @@
 "use client";
 
 import { CreditsProvider } from "@/context/credits-context";
-import { NavBar } from "@/ui/navbar";
+import { NavBar } from "@/components/layout/navbar";
 import { useState } from "react";
 
 export default function DashboardLayout({ children }) {

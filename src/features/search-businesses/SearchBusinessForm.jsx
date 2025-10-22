@@ -1,15 +1,15 @@
 import { useForm, Controller } from "react-hook-form";
-import { Button } from "@/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/ui/card";
-import { Input } from "@/ui/input";
-import { StateSelect } from "@/ui/stateSelect";
-import FormErrorMessage from "@/ui/form-error-message";
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { StateSelect } from "@/components/ui/stateSelect";
+import FormErrorMessage from "@/components/ui/form-error-message";
 import { Label } from "@radix-ui/react-label";
 import { useGeocode } from "@/hooks/useGeocode";
 import toast from "react-hot-toast";

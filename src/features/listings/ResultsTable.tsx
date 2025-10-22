@@ -1,8 +1,8 @@
 import { Upload } from "lucide-react";
-import { Button } from "../../ui/button";
+import { Button } from "../../components/ui/button";
 import { useExportToCSV } from "@/hooks/useExportToCSV";
 import toast from "react-hot-toast";
-import { Card } from "@/ui/card";
+import { Card } from "@/components/ui/card";
 
 interface SearchResult {
   businessName: string;

@@ -8,7 +8,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/ui/select";
+} from "@/components/lib/shadcn/select";
 
 const states = [
   { value: "al", label: "Alabama" },

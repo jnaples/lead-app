@@ -3,16 +3,20 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { useEffect, useState, useRef } from "react";
-import { Button } from "@/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "@/ui/navigation-menu";
-import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
-import AccountDropdown from "@/ui/account-dropdown-menu";
-import Logo from "./logo";
+} from "@/components/lib/shadcn/navigation-menu";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/lib/shadcn/popover";
+import AccountDropdown from "@/components/ui/account-dropdown-menu";
+import Logo from "../ui/logo";
 import Link from "next/link";
 import { useCredits } from "@/context/credits-context";
 import { usePathname } from "next/navigation";
